@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /
+
+# Este subdominio publica documentos HTML compartidos por enlace directo.
+# No debe indexarse ni rastrearse.
