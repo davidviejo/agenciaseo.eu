@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Análisis de enlazado interno · Economía 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0B1E4B;
+    --navy-mid: #162d6e;
+    --navy-light: #1e3a8a;
+    --coral: #FF6B5A;
+    --coral-light: #ff8a7a;
+    --coral-bg: #fff2f0;
+    --bg: #F4F6FB;
+    --card: #ffffff;
+    --border: #dde2f0;
+    --text: #0B1E4B;
+    --text-mid: #4a5578;
+    --text-light: #8090b0;
+    --green: #22c55e;
+    --yellow: #f59e0b;
+    --red: #ef4444;
+    --blue-accent: #3b82f6;
+    --sidebar-w: 230px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5 { font-family: 'Space Grotesk', sans-serif; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: var(--sidebar-w);
+    height: 100vh;
+    background: var(--navy);
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    padding: 28px 0 24px;
+  }
+
+  .sidebar-brand {
+    padding: 0 20px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .sidebar-brand .logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--coral);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .sidebar-brand .domain {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    margin-top: 2px;
+  }
+
+  .sidebar-nav {
+    padding: 16px 0;
+    flex: 1;
+  }
+
+  .sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 20px;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    transition: all 0.15s;
+    letter-spacing: 0.01em;
+    border-left: 2px solid transparent;
+  }
+
+  .sidebar-nav a:hover, .sidebar-nav a.active {
+    color: #fff;
+    background: rgba(255,255,255,0.06);
+    border-left-color: var(--coral);
+  }
+
+  .sidebar-nav a .num {
+    font-size: 10px;
+    color: rgba(255,255,255,0.25);
+    font-weight: 400;
+    min-width: 18px;
+  }
+
+  .sidebar-score {
+    margin: 0 16px 0;
+    padding: 14px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .sidebar-score .score-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--coral);
+    line-height: 1;
+  }
+
+  .sidebar-score .score-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── MAIN ── */
+  .main {
+    margin-left: var(--sidebar-w);
+    min-height: 100vh;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: var(--navy);
+    padding: 64px 64px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(255,107,90,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cover-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.7);
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+    font-weight: 500;
+  }
+
+  .cover-tag span { color: var(--coral); }
+
+  .cover h1 {
+    font-size: 50px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.05;
+    margin-bottom: 6px;
+    letter-spacing: -0.02em;
+  }
+
+  .cover h1 em {
+    color: var(--coral);
+    font-style: normal;
+  }
+
+  .cover-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    max-width: 620px;
+    margin-top: 16px;
+    line-height: 1.6;
+  }
+
+  .cover-meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 40px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 720px;
+  }
+
+  .cover-meta-item {
+    padding: 14px 18px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .cover-meta-item:last-child { border-right: none; }
+
+  .cover-meta-item .label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 4px;
+  }
+
+  .cover-meta-item .val {
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    font-weight: 500;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  /* ── KPI STRIP ── */
+  .kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .kpi-item {
+    padding: 28px 32px;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+
+  .kpi-item:last-child { border-right: none; }
+
+  .kpi-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .kpi-item:nth-child(1)::before { background: var(--red); }
+  .kpi-item:nth-child(2)::before { background: var(--coral); }
+  .kpi-item:nth-child(3)::before { background: var(--blue-accent); }
+  .kpi-item:nth-child(4)::before { background: var(--yellow); }
+
+  .kpi-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-light);
+    margin-bottom: 8px;
+  }
+
+  .kpi-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .kpi-delta {
+    font-size: 12px;
+    color: var(--text-light);
+  }
+
+  /* ── CONTENT SECTIONS ── */
+  .content {
+    padding: 48px 64px;
+  }
+
+  .section {
+    margin-bottom: 72px;
+    scroll-margin-top: 32px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .section-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--coral);
+    background: var(--coral-bg);
+    padding: 4px 10px;
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+    margin-top: 6px;
+    white-space: nowrap;
+  }
+
+  .section-title-block h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  .section-title-block .subtitle {
+    font-size: 14px;
+    color: var(--text-mid);
+    margin-top: 4px;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+
+  .card-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-light);
+    margin-bottom: 16px;
+  }
+
+  .card p { color: var(--text-mid); margin-bottom: 10px; }
+  .card p:last-child { margin-bottom: 0; }
+  .card ul { padding-left: 20px; color: var(--text-mid); margin: 8px 0; }
+  .card ul li { margin-bottom: 4px; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+
+  /* ── SCORECARD ── */
+  .scorecard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .score-row {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .score-ring {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+  }
+
+  .score-info { flex: 1; }
+
+  .score-info .name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .score-bar-track {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-top: 8px;
+  }
+
+  .score-bar-fill {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--coral);
+  }
+
+  /* ── TABLES ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+
+  .data-table th {
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-light);
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .data-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--text-mid);
+    line-height: 1.5;
+  }
+
+  .data-table tr:last-child td { border-bottom: none; }
+
+  .data-table tr:hover td { background: #f9fafd; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .badge-red { background: #fee2e2; color: #b91c1c; }
+  .badge-yellow { background: #fef3c7; color: #92400e; }
+  .badge-green { background: #dcfce7; color: #166534; }
+  .badge-blue { background: #dbeafe; color: #1e40af; }
+  .badge-gray { background: #f1f5f9; color: #64748b; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight {
+    background: var(--navy);
+    color: #fff;
+    border-radius: 12px;
+    padding: 28px 32px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .highlight::before {
+    content: '';
+    position: absolute;
+    right: -60px; bottom: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(255,107,90,0.2) 0%, transparent 70%);
+  }
+
+  .highlight h3 {
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .highlight p { font-size: 14px; color: rgba(255,255,255,0.78); line-height: 1.7; }
+
+  .highlight strong { color: var(--coral); }
+
+  .highlight .big-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--coral);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  /* ── SEVERITY ITEMS ── */
+  .sev-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .sev-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .sev-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+
+  .sev-dot.critical { background: var(--red); box-shadow: 0 0 0 3px rgba(239,68,68,0.15); }
+  .sev-dot.warn { background: var(--yellow); box-shadow: 0 0 0 3px rgba(245,158,11,0.15); }
+  .sev-dot.ok { background: var(--green); box-shadow: 0 0 0 3px rgba(34,197,94,0.15); }
+  .sev-dot.info { background: var(--blue-accent); box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
+
+  .sev-content { flex: 1; }
+
+  .sev-content .title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 3px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .sev-content .detail {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.5;
+  }
+
+  .sev-content code {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 11.5px;
+    font-family: 'Space Grotesk', monospace;
+    color: var(--navy);
+  }
+
+  /* ── ACTION PLAN ── */
+  .action-phases { display: flex; flex-direction: column; gap: 24px; }
+
+  .phase-block {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .phase-header {
+    padding: 14px 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .phase-header.critical { background: #fee2e2; }
+  .phase-header.important { background: #fef3c7; }
+  .phase-header.strategic { background: #dbeafe; }
+
+  .phase-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .phase-header.critical .phase-dot { background: var(--red); }
+  .phase-header.important .phase-dot { background: var(--yellow); }
+  .phase-header.strategic .phase-dot { background: var(--blue-accent); }
+
+  .phase-header .phase-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .phase-header.critical .phase-title { color: #b91c1c; }
+  .phase-header.important .phase-title { color: #92400e; }
+  .phase-header.strategic .phase-title { color: #1e40af; }
+
+  .phase-items {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+  }
+
+  .action-item {
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+
+  .action-item:last-child { border-bottom: none; }
+
+  .action-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-light);
+    padding-top: 1px;
+  }
+
+  .action-text {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .action-text p {
+    font-size: 13px;
+    color: var(--text-mid);
+    margin-top: 4px;
+    font-weight: 400;
+  }
+
+  .action-text .blocks {
+    display: inline-block;
+    margin-top: 6px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-light);
+    letter-spacing: 0.05em;
+  }
+
+
+  /* ── MACROGROUP CARDS ── */
+  .macro-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .macro-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    border-left: 4px solid var(--coral);
+  }
+
+  .macro-card.p1 { border-left-color: var(--red); }
+  .macro-card.p1p2 { border-left-color: var(--yellow); }
+  .macro-card.p2 { border-left-color: var(--blue-accent); }
+  .macro-card.p3 { border-left-color: var(--text-light); }
+
+  .macro-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    gap: 10px;
+  }
+
+  .macro-id {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-light);
+    letter-spacing: 0.08em;
+  }
+
+  .macro-prio {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    background: var(--bg);
+    color: var(--text-light);
+  }
+
+  .macro-prio.p1 { background: #fee2e2; color: #b91c1c; }
+  .macro-prio.p1p2 { background: #fef3c7; color: #92400e; }
+  .macro-prio.p2 { background: #dbeafe; color: #1e40af; }
+  .macro-prio.p3 { background: #f1f5f9; color: #64748b; }
+
+  .macro-card h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.25;
+  }
+
+  .macro-card .macro-desc {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .macro-blocks {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10.5px;
+    color: var(--text-light);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── NOTA INLINE ── */
+  .inline-note {
+    background: var(--coral-bg);
+    border-left: 3px solid var(--coral);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    font-size: 13.5px;
+    color: var(--text);
+    margin: 16px 0;
+    line-height: 1.6;
+  }
+
+  .inline-note strong { font-weight: 600; color: var(--coral); }
+
+  /* ── NOTA FINAL ── */
+  .nota-final {
+    background: var(--navy);
+    padding: 48px 64px;
+    color: rgba(255,255,255,0.65);
+    font-size: 13px;
+    line-height: 1.8;
+    border-top: 4px solid var(--coral);
+  }
+
+  .nota-final strong { color: rgba(255,255,255,0.9); }
+
+  .nota-footer {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .nota-footer .brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--coral);
+  }
+
+  .nota-footer .doc-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* ── MARKET / OPPORTUNITY / LINKBUILDING ── */
+  .market-block {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-bottom: 16px;
+    border-top: 4px solid var(--coral);
+  }
+
+  .market-block .market-flag {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 4px;
+  }
+
+  .market-block h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+
+  .market-block ul { padding-left: 18px; color: var(--text-mid); margin: 8px 0; }
+  .market-block ul li { margin-bottom: 5px; line-height: 1.5; }
+  .market-block p { color: var(--text-mid); margin-bottom: 8px; }
+
+  .competitor-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .competitor-chip {
+    font-size: 12px;
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--navy);
+    padding: 4px 11px;
+    border-radius: 20px;
+  }
+
+  .vertical-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .vertical-row:last-child { border-bottom: none; }
+
+  .vertical-state {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 3px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .vertical-state.critico { background: #fee2e2; color: #b91c1c; }
+  .vertical-state.debil { background: #fef3c7; color: #92400e; }
+  .vertical-state.medio { background: #dbeafe; color: #1e40af; }
+  .vertical-state.fuerte { background: #dcfce7; color: #166534; }
+
+  .vertical-text { font-size: 13.5px; color: var(--text-mid); line-height: 1.5; }
+  .vertical-text strong { color: var(--text); }
+
+  .opp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 14px;
+  }
+
+  .opp-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .opp-url {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 12.5px;
+    color: var(--navy);
+    word-break: break-all;
+    font-weight: 600;
+  }
+
+  .opp-pos {
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--coral-bg);
+    color: var(--coral);
+    padding: 4px 11px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .opp-field { margin-bottom: 9px; }
+
+  .opp-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-light);
+    margin-bottom: 2px;
+  }
+
+  .opp-value { font-size: 13.5px; color: var(--text); line-height: 1.5; }
+
+  .opp-kw-main {
+    display: inline-block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    background: var(--navy);
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 6px;
+  }
+
+  .opp-meta-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 4px;
+  }
+
+  .opp-meta-box .t {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+
+  .opp-meta-box .d { font-size: 12.5px; color: var(--text-mid); line-height: 1.5; }
+
+  .opp-note {
+    font-size: 12px;
+    color: var(--text-light);
+    font-style: italic;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--border);
+  }
+
+  /* ── CODE BLOCK ── */
+  pre {
+    background: #0B1E4B;
+    color: #f4f6fb;
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 12.5px;
+    line-height: 1.6;
+    margin: 12px 0;
+  }
+
+  pre .com { color: rgba(255,255,255,0.4); }
+  pre .key { color: #ff8a7a; }
+  pre .str { color: #93c5fd; }
+  pre .del { color: #fca5a5; text-decoration: line-through; opacity: 0.6; }
+  pre .add { color: #86efac; font-weight: 500; }
+
+  /* scrollbar */
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+
+  /* ── HAMBURGER ── */
+  .hamburger {
+    display: none;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 200;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 10px;
+    background: var(--navy);
+    cursor: pointer;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  }
+
+  .hamburger span,
+  .hamburger span::before,
+  .hamburger span::after {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: #fff;
+    border-radius: 1px;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger span::before,
+  .hamburger span::after {
+    content: '';
+    position: absolute;
+    left: 0;
+  }
+
+  .hamburger span::before { top: -6px; }
+  .hamburger span::after { top: 6px; }
+
+  .hamburger.active span { background: transparent; }
+  .hamburger.active span::before { top: 0; transform: rotate(45deg); }
+  .hamburger.active span::after { top: 0; transform: rotate(-45deg); }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 90;
+  }
+
+  .sidebar-overlay.active { display: block; }
+
+  /* ── URL CALLOUT ── */
+  .url-mono {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 12px;
+    color: var(--navy);
+    background: var(--bg);
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    word-break: break-all;
+    display: inline-block;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .cover { padding: 48px 40px 40px; }
+    .content { padding: 36px 40px; }
+    .nota-final { padding: 36px 40px; }
+    .cover h1 { font-size: 40px; }
+    .highlight .big-num { font-size: 44px; }
+    .kpi-value { font-size: 28px; }
+    .scorecard-grid { grid-template-columns: repeat(2, 1fr); }
+    .macro-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+    .sidebar { transform: translateX(-100%); transition: transform 0.3s ease; }
+    .sidebar.open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .cover { padding: 60px 20px 32px; }
+    .cover h1 { font-size: 28px; }
+    .cover-meta { grid-template-columns: repeat(2, 1fr); }
+    .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+    .kpi-item { padding: 18px 20px; }
+    .kpi-item:nth-child(2) { border-right: none; }
+    .kpi-item:nth-child(3), .kpi-item:nth-child(4) { border-top: 1px solid var(--border); }
+    .kpi-value { font-size: 24px; }
+    .content { padding: 28px 16px; }
+    .section { margin-bottom: 48px; }
+    .section-title-block h2 { font-size: 20px; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .scorecard-grid { grid-template-columns: 1fr; }
+    .macro-grid { grid-template-columns: 1fr; }
+    .card { padding: 18px 14px; }
+    .highlight { padding: 20px 18px; }
+    .highlight .big-num { font-size: 36px; }
+    .data-table { min-width: 500px; }
+    .card { overflow-x: auto; }
+    .action-item { grid-template-columns: 24px 1fr; gap: 10px; }
+    .nota-final { padding: 28px 16px; }
+    .nota-footer { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }
+
+
+  .logic-chain {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin: 18px 0 8px;
+  }
+  .logic-pill {
+    background: var(--navy);
+    color: #fff;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .logic-arrow { color: var(--text-light); font-weight: 700; }
+  .block-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 14px;
+    border-left: 4px solid var(--coral);
+  }
+  .block-card.semantic { border-left-color: var(--blue-accent); }
+  .block-card.news { border-left-color: var(--yellow); }
+  .block-card.editorial { border-left-color: var(--text-light); }
+  .block-card.context { border-left-color: var(--green); }
+  .block-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .block-head h4 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 0;
+  }
+  .limit-badge {
+    background: var(--coral-bg);
+    color: var(--coral);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .block-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .mini-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 11px 13px;
+  }
+  .mini-box .label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--text-light);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .mini-box .value { font-size: 13px; color: var(--text-mid); line-height: 1.45; }
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 12px 0;
+  }
+  .flow-step {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 12px 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .flow-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--coral);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .flow-text strong { color: var(--navy); }
+  .flow-text { color: var(--text-mid); font-size: 13.5px; line-height: 1.5; }
+  .template-map {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .slot {
+    display: grid;
+    grid-template-columns: 160px 1fr 120px;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .slot:last-child { border-bottom: none; }
+  .slot-name { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: var(--navy); }
+  .slot-detail { font-size: 13px; color: var(--text-mid); }
+  .slot-limit { text-align: right; font-size: 12px; color: var(--coral); font-weight: 700; font-family: 'Space Grotesk', sans-serif; }
+  @media (max-width: 768px) {
+    .block-meta { grid-template-columns: 1fr; }
+    .slot { grid-template-columns: 1fr; gap: 4px; }
+    .slot-limit { text-align: left; }
+  }
+
+
+</style>
+</head>
+<body>
+
+<button class="hamburger" aria-label="Abrir menú"><span></span></button>
+<div class="sidebar-overlay"></div>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="logo">AgenciaSEO.eu</div>
+    <div class="domain">Economía 3 · Enlazado interno</div>
+  </div>
+  <div style="padding: 20px 16px 12px;">
+    <div class="sidebar-score">
+      <div class="score-num">SEO</div>
+      <div class="score-label">Arquitectura interna</div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="#cover"><span class="num">00</span> Portada</a>
+    <a href="#resumen"><span class="num">01</span> Resumen</a>
+    <a href="#principio"><span class="num">02</span> Principio</a>
+    <a href="#ubicacion"><span class="num">03</span> Ubicación</a>
+    <a href="#evergreen"><span class="num">04</span> Evergreen</a>
+    <a href="#noticias"><span class="num">05</span> Noticias</a>
+    <a href="#vinculacion"><span class="num">06</span> Vinculación</a>
+    <a href="#sin-tema"><span class="num">07</span> Sin tema</a>
+    <a href="#limites"><span class="num">08</span> Límites</a>
+    <a href="#control"><span class="num">09</span> Control</a>
+    <a href="#desarrollo"><span class="num">10</span> Desarrollo</a>
+  </nav>
+</nav>
+
+<main class="main">
+
+  <section id="cover" class="cover">
+    <div class="cover-tag"><span>●</span> Análisis SEO · Arquitectura de enlazado interno · Evergreen + Noticias</div>
+    <h1>Sistema de enlazado interno<br><em>Economía 3</em></h1>
+    <p class="cover-sub">Análisis funcional para ordenar los bloques de enlazado interno de Economía 3, diferenciando artículos evergreen y noticias. El objetivo es que los módulos de relación no funcionen como listados genéricos, sino que prioricen la cercanía temática, distribuyan autoridad y mejoren la navegación interna.</p>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><div class="label">Proyecto</div><div class="val">Economía 3</div></div>
+      <div class="cover-meta-item"><div class="label">Sitio</div><div class="val">economia3.com</div></div>
+      <div class="cover-meta-item"><div class="label">Fecha</div><div class="val">Junio 2026</div></div>
+      <div class="cover-meta-item"><div class="label">Foco</div><div class="val">Bloques dinámicos</div></div>
+    </div>
+  </section>
+
+  <div class="kpi-strip">
+    <div class="kpi-item"><div class="kpi-label">Regla principal</div><div class="kpi-value">Tema</div><div class="kpi-delta">Por encima de categoría y general</div></div>
+    <div class="kpi-item"><div class="kpi-label">Bloques prioritarios</div><div class="kpi-value">4</div><div class="kpi-delta">Actualidad, contexto, relacionados, destacados</div></div>
+    <div class="kpi-item"><div class="kpi-label">Cantidad por bloque</div><div class="kpi-value">Fija</div><div class="kpi-delta">Mínimo 2 resultados válidos para renderizar</div></div>
+    <div class="kpi-item"><div class="kpi-label">Modelo de ejecución</div><div class="kpi-value">Fases</div><div class="kpi-delta">Taxonomía primero, semántica después</div></div>
+  </div>
+
+  <div class="content">
+
+    <section id="resumen" class="section">
+      <div class="section-header"><div class="section-num">01</div><div class="section-title-block"><h2>Resumen ejecutivo</h2><p class="subtitle">De bloque aislado a sistema de enlazado interno por intención</p></div></div>
+      <div class="highlight">
+        <h3>Idea central</h3>
+        <p>La recomendación no es añadir simplemente un módulo más, sino <strong>ordenar la lógica de todos los bloques de enlazado interno de Economía 3</strong>. En Economía 3, los contenidos evergreen deben ayudar a impulsar la actualidad relacionada, y las noticias deben quedar conectadas con contexto, piezas evergreen y otras noticias del mismo tema.</p>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Qué buscamos</div>
+          <ul>
+            <li>Distribuir autoridad desde evergreen hacia noticias recientes.</li>
+            <li>Evitar que las noticias queden aisladas tras su publicación.</li>
+            <li>Priorizar enlaces por cercanía temática antes que por recencia general.</li>
+            <li>Diferenciar bloques SEO/semánticos de bloques editoriales.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">Qué no buscamos</div>
+          <ul>
+            <li>No insertar bloques automáticos dentro del cuerpo que ya posiciona.</li>
+            <li>No rellenar bloques semánticos con contenidos generales sin relación.</li>
+            <li>No tratar “últimas noticias”, “destacados” y “relacionados” como si fueran lo mismo.</li>
+            <li>No convertir los bloques automáticos en listados genéricos sin prioridad temática.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="principio" class="section">
+      <div class="section-header"><div class="section-num">02</div><div class="section-title-block"><h2>Principio general de relación</h2><p class="subtitle">La proximidad semántica debe pesar más que la categoría amplia</p></div></div>
+      <div class="card">
+        <div class="card-title">Orden recomendado</div>
+        <div class="logic-chain">
+          <div class="logic-pill">Post actual</div><div class="logic-arrow">→</div>
+          <div class="logic-pill">Tema</div><div class="logic-arrow">→</div>
+          <div class="logic-pill">Subcategoría</div><div class="logic-arrow">→</div>
+          <div class="logic-pill">Categoría principal</div><div class="logic-arrow">→</div>
+          <div class="logic-pill">General</div>
+        </div>
+        <p>Ejemplo aplicado: <strong>Post → Tema → Living → Valencia → Noticias generales</strong>.</p>
+        <div class="inline-note"><strong>Lectura SEO:</strong> “Tema” es lo más cercano al contenido y debe ser la primera señal de relación. “Living” es una vertical cercana. “Valencia” aporta contexto amplio, pero es menos precisa. “General” solo debe usarse como fallback en bloques de actualidad o destacados, no en bloques semánticos.</div>
+      </div>
+      <div class="card">
+        <table class="data-table">
+          <thead><tr><th>Nivel</th><th>Función</th><th>Valor para enlazado interno</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Tema</strong></td><td>Relación más cercana al contenido real.</td><td><span class="badge badge-green">Muy alto</span></td></tr>
+            <tr><td><strong>Subcategoría</strong></td><td>Vertical o agrupación afín.</td><td><span class="badge badge-blue">Alto</span></td></tr>
+            <tr><td><strong>Categoría principal</strong></td><td>Marco general del contenido.</td><td><span class="badge badge-yellow">Medio</span></td></tr>
+            <tr><td><strong>General</strong></td><td>Descubrimiento o actualidad sin relación semántica fuerte.</td><td><span class="badge badge-gray">Bajo para SEO semántico</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="ubicacion" class="section">
+      <div class="section-header"><div class="section-num">03</div><div class="section-title-block"><h2>Ubicación de los bloques</h2><p class="subtitle">Después del contenido que posiciona, antes de módulos genéricos</p></div></div>
+      <div class="highlight">
+        <h3>Regla de plantilla</h3>
+        <p>Los bloques dinámicos automáticos deben ir <strong>al final del cuerpo principal</strong>, después de la conclusión o cierre editorial, y antes de módulos genéricos. No se recomienda insertarlos entre párrafos del contenido original que ya está posicionando. En Economía 3, los enlaces situados bajo el artículo deben prevalecer sobre los de la barra lateral: el usuario suele leer y escanear el contenido en diagonal, por lo que los módulos integrados bajo el cuerpo central tienen más continuidad de lectura. Aunque la barra lateral pueda verse antes en desktop, a nivel de consumo real queda en una zona secundaria y, en móvil, normalmente se desplaza por debajo del contenido.</p>
+      </div>
+      <div class="template-map">
+        <div class="slot"><div class="slot-name">01 · Contenido</div><div class="slot-detail">H1, entradilla, desarrollo, elementos editoriales y cierre del artículo/noticia.</div><div class="slot-limit">Sin cambios</div></div>
+        <div class="slot"><div class="slot-name">02 · Bloque SEO 1</div><div class="slot-detail">Primer bloque con relación directa: actualidad relacionada en evergreen o contexto relacionado en noticia.</div><div class="slot-limit">4 en evergreen · 2 en noticia</div></div>
+        <div class="slot"><div class="slot-name">03 · Bloque SEO 2</div><div class="slot-detail">Relación temática secundaria: más contenidos sobre el tema o noticias relacionadas.</div><div class="slot-limit">3 items</div></div>
+        <div class="slot"><div class="slot-name">04 · Módulos editoriales</div><div class="slot-detail">Últimas noticias, destacados, módulos de descubrimiento o bloques promocionales.</div><div class="slot-limit">4 últimas · 3 destacados</div></div>
+      </div>
+      <div class="inline-note"><strong>Matiz:</strong> los enlaces manuales contextuales sí pueden aparecer dentro del contenido si encajan de forma natural. La restricción aplica a bloques automáticos o dinámicos. Para los bloques SEO, la ubicación bajo el artículo prevalece frente a la barra lateral porque mantiene la continuidad de lectura y evita que los enlaces queden en una zona secundaria del layout.</div>
+    </section>
+
+    <section id="evergreen" class="section">
+      <div class="section-header"><div class="section-num">04</div><div class="section-title-block"><h2>Plantilla recomendada en artículos evergreen</h2><p class="subtitle">En Economía 3, el evergreen actúa como página fuerte que reparte autoridad</p></div></div>
+      <div class="block-card news">
+        <div class="block-head"><h4>1. Actualidad relacionada</h4><span class="limit-badge">4 noticias</span></div>
+        <p>Debe ubicarse justo después del cierre del artículo evergreen. Es el bloque prioritario para enlazar desde contenidos estables hacia noticias recientes relacionadas.</p>
+        <div class="block-meta"><div class="mini-box"><div class="label">Prioridad</div><div class="value">Noticias recientes del mismo tema → subcategoría → categoría principal → general solo si hace falta completar.</div></div><div class="mini-box"><div class="label">Cantidad / condición</div><div class="value">Mostrar 4 noticias. Si solo hay 2 o 3 noticias válidas, mostrar las disponibles. Si hay menos de 2, no renderizar.</div></div></div>
+      </div>
+      <div class="block-card semantic">
+        <div class="block-head"><h4>2. Más contenidos sobre este tema</h4><span class="limit-badge">3 contenidos</span></div>
+        <p>Debe aparecer después de actualidad relacionada. Refuerza profundidad temática enlazando a otros evergreen, guías, análisis o contenidos de fondo cercanos.</p>
+        <div class="block-meta"><div class="mini-box"><div class="label">Prioridad</div><div class="value">Otros evergreen del mismo tema → guías/análisis → noticias muy relacionadas → subcategoría.</div></div><div class="mini-box"><div class="label">Cantidad / condición</div><div class="value">Mostrar 3 contenidos. Si solo hay 2 contenidos válidos, mostrar 2. Si hay menos de 2, no renderizar. No completar con contenido general.</div></div></div>
+      </div>
+      <div class="block-card editorial">
+        <div class="block-head"><h4>3. Artículos destacados</h4><span class="limit-badge">3 contenidos</span></div>
+        <p>Bloque editorial o estratégico. Debe mantenerse por debajo de los bloques semánticos. Si existe barra lateral, debe considerarse secundaria frente a los bloques bajo el artículo, priorizando siempre la misma categoría o vertical.</p>
+        <div class="block-meta"><div class="mini-box"><div class="label">Prioridad</div><div class="value">Destacados del mismo tema → subcategoría → categoría principal → destacados generales.</div></div><div class="mini-box"><div class="label">Cantidad / condición</div><div class="value">Mostrar 3 contenidos. Puede completar con destacados generales si no hay destacados cercanos. Si hay menos de 2 resultados tras el fallback, no renderizar.</div></div></div>
+      </div>
+      <div class="block-card">
+        <div class="block-head"><h4>4. Últimas noticias</h4><span class="limit-badge">4 noticias</span></div>
+        <p>Debe quedar por debajo de los bloques SEO. Si aparece en barra lateral, su peso debe ser secundario frente a los enlaces ubicados bajo el artículo. Mantiene función de actualidad, pero debe priorizar relación antes de mostrar general.</p>
+        <div class="block-meta"><div class="mini-box"><div class="label">Prioridad</div><div class="value">Últimas del mismo tema → subcategoría → categoría principal → últimas generales.</div></div><div class="mini-box"><div class="label">Cantidad / condición</div><div class="value">Mostrar 4 noticias. Puede completar con noticias generales porque su función también es de actualidad. Si hay menos de 2 resultados tras el fallback, no renderizar.</div></div></div>
+      </div>
+    </section>
+
+    <section id="noticias" class="section">
+      <div class="section-header"><div class="section-num">05</div><div class="section-title-block"><h2>Plantilla recomendada en noticias</h2><p class="subtitle">En Economía 3, la noticia debe conectarse con contexto y no quedar aislada</p></div></div>
+      <div class="block-card context">
+        <div class="block-head"><h4>1. Contexto relacionado / Para entender esta noticia</h4><span class="limit-badge">2 contenidos</span></div>
+        <p>Primer bloque tras el cierre de la noticia. Debe enlazar a evergreen, guías, explicativos o análisis que ayuden a entender el tema.</p>
+        <div class="block-meta"><div class="mini-box"><div class="label">Prioridad</div><div class="value">Evergreen del mismo tema → guías/explicativos → análisis del mismo tema → subcategoría.</div></div><div class="mini-box"><div class="label">Cantidad / condición</div><div class="value">Mostrar 2 contenidos. Si hay menos de 2 contenidos útiles, no renderizar. No completar con general.</div></div></div>
+      </div>
+      <div class="block-card semantic">
+        <div class="block-head"><h4>2. Noticias relacionadas</h4><span class="limit-badge">3 noticias</span></div>
+        <p>Conecta la noticia con otras piezas de la misma línea informativa o tema.</p>
+        <div class="block-meta"><div class="mini-box"><div class="label">Prioridad</div><div class="value">Noticias del mismo tema → subcategoría → categoría principal.</div></div><div class="mini-box"><div class="label">Cantidad / condición</div><div class="value">Mostrar 3 noticias. Si solo hay 2 noticias relacionadas válidas, mostrar 2. Si hay menos de 2, no renderizar.</div></div></div>
+      </div>
+      <div class="block-card">
+        <div class="block-head"><h4>3. Últimas noticias</h4><span class="limit-badge">4 noticias</span></div>
+        <p>Debe aparecer después de contexto y relacionadas. Si se mantiene también en barra lateral, ese módulo debe considerarse secundario: en lectura diagonal y en móvil, los enlaces bajo el artículo tienen mayor continuidad y peso de navegación. Su función es actualidad, pero con prioridad temática cuando sea posible.</p>
+        <div class="block-meta"><div class="mini-box"><div class="label">Prioridad</div><div class="value">Últimas del mismo tema → subcategoría → categoría principal → últimas generales.</div></div><div class="mini-box"><div class="label">Cantidad / condición</div><div class="value">Mostrar 4 noticias. Puede completar con últimas generales si faltan huecos. Si hay menos de 2 resultados tras el fallback, no renderizar.</div></div></div>
+      </div>
+      <div class="block-card editorial">
+        <div class="block-head"><h4>4. Artículos destacados</h4><span class="limit-badge">3 contenidos</span></div>
+        <p>Módulo editorial inferior para dar visibilidad a contenidos prioritarios dentro de la misma vertical. Si aparece en barra lateral, no debe sustituir los bloques bajo el artículo.</p>
+        <div class="block-meta"><div class="mini-box"><div class="label">Prioridad</div><div class="value">Destacados del mismo tema → subcategoría → categoría principal → generales.</div></div><div class="mini-box"><div class="label">Cantidad / condición</div><div class="value">Mostrar 3 contenidos. Puede completar con destacados generales si no hay destacados cercanos. Si hay menos de 2 resultados tras el fallback, no renderizar.</div></div></div>
+      </div>
+    </section>
+
+    <section id="vinculacion" class="section">
+      <div class="section-header"><div class="section-num">06</div><div class="section-title-block"><h2>Cómo se vinculan los contenidos</h2><p class="subtitle">Relación bidireccional entre evergreen, noticias y clusters temáticos</p></div></div>
+      <div class="grid-2">
+        <div class="card"><div class="card-title">Evergreen → Noticias</div><p>Los evergreen enlazan a noticias recientes relacionadas para transferir autoridad y reforzar frescura.</p><p><strong>Bloque:</strong> Actualidad relacionada. <strong>Cantidad:</strong> 4 noticias, siempre que existan al menos 2 resultados válidos.</p></div>
+        <div class="card"><div class="card-title">Noticias → Evergreen</div><p>Las noticias enlazan a contenidos evergreen que aportan contexto y evitan que la pieza quede aislada.</p><p><strong>Bloque:</strong> Contexto relacionado. <strong>Cantidad:</strong> 2 contenidos, siempre que existan 2 resultados válidos.</p></div>
+        <div class="card"><div class="card-title">Noticias → Noticias</div><p>Las noticias enlazan a otras noticias del mismo tema para crear continuidad informativa.</p><p><strong>Bloque:</strong> Noticias relacionadas. <strong>Cantidad:</strong> 3 noticias, siempre que existan al menos 2 resultados válidos.</p></div>
+        <div class="card"><div class="card-title">Evergreen → Evergreen</div><p>Los evergreen enlazan a otros contenidos estables del mismo tema para reforzar profundidad y cluster.</p><p><strong>Bloque:</strong> Más contenidos sobre este tema. <strong>Cantidad:</strong> 3 contenidos, siempre que existan al menos 2 resultados válidos.</p></div>
+      </div>
+    </section>
+
+    <section id="sin-tema" class="section">
+      <div class="section-header"><div class="section-num">07</div><div class="section-title-block"><h2>Qué pasa si no existe un “tema”</h2><p class="subtitle">Fallback progresivo sin romper la lógica de relevancia</p></div></div>
+      <div class="highlight"><h3>Fallback recomendado</h3><p><strong>Tema definido → etiqueta principal → subcategoría → categoría principal → keyword en título/entradilla → general</strong>. El nivel general solo debe usarse en bloques donde tenga sentido editorial o de actualidad.</p></div>
+      <div class="card">
+        <table class="data-table">
+          <thead><tr><th>Bloque</th><th>Si no hay tema</th><th>¿Completa con general?</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Actualidad relacionada</strong></td><td>Etiqueta principal → subcategoría → categoría principal.</td><td><span class="badge badge-yellow">Solo si funciona como actualidad</span></td></tr>
+            <tr><td><strong>Más contenidos sobre este tema</strong></td><td>Etiqueta principal → subcategoría → categoría principal solo si hay relación clara.</td><td><span class="badge badge-red">No</span></td></tr>
+            <tr><td><strong>Contexto relacionado</strong></td><td>Etiqueta principal → subcategoría → evergreen de categoría solo si aporta contexto.</td><td><span class="badge badge-red">No</span></td></tr>
+            <tr><td><strong>Noticias relacionadas</strong></td><td>Etiqueta principal → subcategoría → categoría principal.</td><td><span class="badge badge-red">No</span></td></tr>
+            <tr><td><strong>Últimas noticias</strong></td><td>Subcategoría → categoría principal → general.</td><td><span class="badge badge-green">Sí</span></td></tr>
+            <tr><td><strong>Artículos destacados</strong></td><td>Subcategoría → categoría principal → generales.</td><td><span class="badge badge-green">Sí</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="inline-note"><strong>Regla operativa:</strong> los bloques semánticos no se rellenan con general. Los bloques editoriales o de actualidad sí pueden hacerlo para no dejar huecos.</div>
+    </section>
+
+    <section id="limites" class="section">
+      <div class="section-header"><div class="section-num">08</div><div class="section-title-block"><h2>Cantidad definida por bloque</h2><p class="subtitle">Cantidad fija para no diluir autoridad ni parecer módulo genérico</p></div></div>
+      <div class="grid-2">
+        <div class="card"><div class="card-title">Artículos evergreen</div>
+          <table class="data-table"><thead><tr><th>Bloque</th><th>Cantidad fija</th><th>Condición mínima</th></tr></thead><tbody>
+            <tr><td>Actualidad relacionada</td><td><strong>4 noticias</strong></td><td>Si hay 2 o 3 noticias válidas, mostrar las disponibles. Si hay menos de 2, no renderizar.</td></tr>
+            <tr><td>Más contenidos sobre este tema</td><td><strong>3 contenidos</strong></td><td>Si hay 2 contenidos válidos, mostrar 2. Si hay menos de 2, no renderizar.</td></tr>
+            <tr><td>Artículos destacados</td><td><strong>3 contenidos</strong></td><td>Completar con fallback editorial si hace falta. Si hay menos de 2 resultados, no renderizar.</td></tr>
+            <tr><td>Últimas noticias</td><td><strong>4 noticias</strong></td><td>Completar con fallback a general si hace falta. Si hay menos de 2 resultados, no renderizar.</td></tr>
+          </tbody></table>
+        </div>
+        <div class="card"><div class="card-title">Noticias</div>
+          <table class="data-table"><thead><tr><th>Bloque</th><th>Cantidad fija</th><th>Condición mínima</th></tr></thead><tbody>
+            <tr><td>Contexto relacionado</td><td><strong>2 contenidos</strong></td><td>Si no hay 2 contenidos útiles de contexto, no renderizar.</td></tr>
+            <tr><td>Noticias relacionadas</td><td><strong>3 noticias</strong></td><td>Si hay 2 noticias relacionadas, mostrar 2. Si hay menos de 2, no renderizar.</td></tr>
+            <tr><td>Últimas noticias</td><td><strong>4 noticias</strong></td><td>Completar con fallback a general si hace falta. Si hay menos de 2 resultados, no renderizar.</td></tr>
+            <tr><td>Artículos destacados</td><td><strong>3 contenidos</strong></td><td>Completar con fallback editorial si hace falta. Si hay menos de 2 resultados, no renderizar.</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+      <div class="inline-note"><strong>Criterio común:</strong> cada bloque tiene una cantidad definida. La única excepción es que no existan suficientes resultados válidos: con 2 resultados puede renderizarse de forma reducida; con menos de 2, el bloque no debe mostrarse.</div>
+    </section>
+
+    <section id="control" class="section">
+      <div class="section-header"><div class="section-num">09</div><div class="section-title-block"><h2>Reglas de control</h2><p class="subtitle">Filtros mínimos para evitar enlaces irrelevantes o de bajo valor</p></div></div>
+      <div class="sev-list">
+        <div class="sev-item"><div class="sev-dot ok"></div><div class="sev-content"><div class="title">Excluir el contenido actual</div><div class="detail">Ningún bloque debe enlazar a la misma URL en la que se renderiza.</div></div></div>
+        <div class="sev-item"><div class="sev-dot warn"></div><div class="sev-content"><div class="title">Evitar URLs no indexables o de bajo valor</div><div class="detail">Excluir eliminadas, redirigidas, noindex, duplicadas, paginaciones sin valor o URLs fuera de la arquitectura prioritaria.</div></div></div>
+        <div class="sev-item"><div class="sev-dot info"></div><div class="sev-content"><div class="title">Relevancia antes que cantidad</div><div class="detail">En bloques semánticos, solo se permite render reducido cuando haya 2 resultados válidos; con menos de 2, el bloque no debe mostrarse ni completarse con contenido sin relación.</div></div></div>
+        <div class="sev-item"><div class="sev-dot info"></div><div class="sev-content"><div class="title">Frescura solo donde aplica</div><div class="detail">La frescura debe pesar en actualidad y últimas noticias. En contexto o relacionados por tema, puede ser mejor un evergreen antiguo pero relevante.</div></div></div>
+        <div class="sev-item"><div class="sev-dot ok"></div><div class="sev-content"><div class="title">Evitar duplicados entre bloques</div><div class="detail">Si una URL aparece en contexto relacionado, no debería repetirse después en noticias relacionadas o destacados dentro de la misma plantilla.</div></div></div>
+      </div>
+    </section>
+
+    <section id="desarrollo" class="section">
+      <div class="section-header"><div class="section-num">10</div><div class="section-title-block"><h2>Idea de funcionamiento</h2><p class="subtitle">Lógica funcional para implementar los bloques en Economía 3</p></div></div>
+      <div class="action-phases">
+        <div class="phase-block"><div class="phase-header critical"><div class="phase-dot"></div><div class="phase-title">Fase 1 · Orden funcional</div></div><div class="phase-items">
+          <div class="action-item"><div class="action-num">01</div><div class="action-text">Identificar tipo de contenido<p>Distinguir si la URL es evergreen o noticia para aplicar una plantilla de bloques distinta.</p></div></div>
+          <div class="action-item"><div class="action-num">02</div><div class="action-text">Leer taxonomía disponible<p>Categoría principal, subcategoría, etiquetas y, si existe, tema principal.</p></div></div>
+          <div class="action-item"><div class="action-num">03</div><div class="action-text">Aplicar fallback progresivo<p>Tema → etiqueta principal → subcategoría → categoría → general solo donde proceda.</p></div></div>
+        </div></div>
+        <div class="phase-block"><div class="phase-header important"><div class="phase-dot"></div><div class="phase-title">Fase 2 · Control y rendimiento</div></div><div class="phase-items">
+          <div class="action-item"><div class="action-num">04</div><div class="action-text">Aplicar filtros de exclusión<p>No indexables, eliminadas, duplicadas, la propia URL y contenidos de bajo valor.</p></div></div>
+          <div class="action-item"><div class="action-num">05</div><div class="action-text">Limitar elementos por bloque<p>Respetar la cantidad fija por bloque: 4 en actualidad/últimas, 3 en relacionados/destacados y 2 en contexto. Si no hay mínimo 2 resultados válidos, no renderizar.</p></div></div>
+          <div class="action-item"><div class="action-num">06</div><div class="action-text">Cachear resultados<p>Evitar consultas pesadas en plantilla y asegurar compatibilidad con Core Web Vitals.</p></div></div>
+        </div></div>
+        <div class="phase-block"><div class="phase-header strategic"><div class="phase-dot"></div><div class="phase-title">Fase 3 · Mejora semántica</div></div><div class="phase-items">
+          <div class="action-item"><div class="action-num">07</div><div class="action-text">Incorporar campo “tema principal”<p>Si no existe, valorar una taxonomía o metadato para mejorar precisión.</p></div></div>
+          <div class="action-item"><div class="action-num">08</div><div class="action-text">Añadir scoring por keywords<p>Combinar taxonomía con coincidencias en título, entradilla y etiquetas para refinar resultados.</p></div></div>
+        </div></div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer id="cierre" class="nota-final">
+    <p><strong>Conclusión:</strong> este análisis convierte los bloques de enlazado interno en una arquitectura funcional. Los evergreen pasan a impulsar noticias recientes y reforzar clusters estables. Las noticias quedan conectadas con contexto y piezas relacionadas. La lógica común debe ser siempre <strong>Tema → Subcategoría → Categoría principal → General</strong>, evitando que los bloques semánticos se rellenen con contenido genérico. Los bloques ubicados bajo el artículo deben prevalecer sobre los de barra lateral, porque respetan mejor la lectura en diagonal y la continuidad natural del usuario.</p>
+    <div class="nota-footer"><div class="brand">AgenciaSEO.eu</div><div class="doc-label">Análisis de enlazado interno — Economía 3 — Junio 2026</div></div>
+  </footer>
+</main>
+
+<script>
+  const hamburger = document.querySelector('.hamburger');
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.querySelector('.sidebar-overlay');
+  if (hamburger && sidebar) {
+    hamburger.addEventListener('click', () => { hamburger.classList.toggle('active'); sidebar.classList.toggle('open'); if (overlay) overlay.classList.toggle('active'); });
+    if (overlay) { overlay.addEventListener('click', () => { hamburger.classList.remove('active'); sidebar.classList.remove('open'); overlay.classList.remove('active'); }); }
+    sidebar.querySelectorAll('.sidebar-nav a').forEach(link => { link.addEventListener('click', () => { if (window.innerWidth <= 768) { hamburger.classList.remove('active'); sidebar.classList.remove('open'); if (overlay) overlay.classList.remove('active'); } }); });
+  }
+  const sections = document.querySelectorAll('.section, .cover, footer');
+  const navLinks = document.querySelectorAll('.sidebar-nav a');
+  const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { navLinks.forEach(link => link.classList.remove('active')); const id = entry.target.id; if (id) { const active = document.querySelector(`.sidebar-nav a[href="#${id}"]`); if (active) active.classList.add('active'); } } }); }, { threshold: 0.2, rootMargin: '-10% 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body></html>
