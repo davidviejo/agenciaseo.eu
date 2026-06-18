@@ -1,4 +1,11 @@
 {
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "https://agenciaseo.eu/",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

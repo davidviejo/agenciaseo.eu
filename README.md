@@ -4,7 +4,7 @@ Repositorio preparado para publicar documentos HTML estáticos en Vercel bajo el
 
 ## Funcionamiento
 
-- No hay página de inicio (`index.html`) de forma intencionada.
+- La página de inicio (`/`) redirige permanentemente a `https://agenciaseo.eu/`.
 - Los documentos se comparten mediante enlaces directos a cada archivo HTML.
 - Todo el sitio está configurado como `noindex, nofollow` mediante:
   - Meta robots en cada HTML.
